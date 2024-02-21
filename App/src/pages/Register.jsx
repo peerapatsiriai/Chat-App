@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from '../assets/logo.svg';
 import Axios from 'axios';
 import { registerRoute } from '../utils/APIRoutes';
 import Swal from 'sweetalert2';
@@ -14,6 +13,12 @@ function Register() {
     password: '',
     confirmPassword: '',
   });
+
+  useEffect(() => {
+    if (localStorage.getItem('chat-app-user')) {
+      navigate('/');
+    }
+  }, []);
 
   const handleChange = (event) => {
     setUserData({ ...userData, [event.target.name]: event.target.value });
@@ -90,7 +95,6 @@ function Register() {
     const isVerified = handleVerify();
     if (isVerified) {
       try {
-        console.log(123);
         await Axios.post(registerRoute, userData);
         Swal.fire({
           title: "Registration successful. Please login.",
@@ -121,11 +125,7 @@ function Register() {
     <FormContainer>
       <form onSubmit={(event) => handleSubmit(event)}>
         <div className='brand'>
-          <img
-            src={Logo}
-            alt='logo'
-          />
-          <h1>Brand</h1>
+          <h1>Register Page</h1>
         </div>
         <input
           type='text'
@@ -169,15 +169,14 @@ const FormContainer = styled.div`
   gap: 1rem;
   align-items: center;
   background-color: #131324;
-
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
-
+    margin-bottom: 2rem;
     img {
-      height: 5rem;
+      height: 10rem;
     }
 
     h1 {
@@ -197,7 +196,7 @@ const FormContainer = styled.div`
     input {
       background-color: transparent;
       padding: 1rem;
-      border: 0.1rem solid #4e0eff;
+      border: 0.1rem solid #00FEFB;
       border-radius: 0.4rem;
       color: white;
       width: 100%;
@@ -205,12 +204,12 @@ const FormContainer = styled.div`
 
       &:focus {
         outline: none;
-        border: 0.1rem solid #997af0;
+        border: 0.1rem solid #1786F9;
       }
     }
     button {
-      background-color: #997af0;
-      color: white;
+      background-color: #00FEFB;
+      color: #131324;
       padding: 1rem 2rem;
       border: none;
       font-weight: bold;
@@ -220,20 +219,19 @@ const FormContainer = styled.div`
       text-transform: uppercase;
       transition: 0.5s ease-in-out;
       &:hover {
-        background-color: #4e0eff;
+        background-color: #1786F9;
       }
     }
     span {
       color: white;
       text-transform: uppercase;
       a {
-        color: #4e0eff;
+        color: #1786F9;
         text-decoration: none;
         font-weight: bold;
       }
     }
   }
-
 `;
 
 export default Register;
