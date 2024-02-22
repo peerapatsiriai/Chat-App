@@ -17,7 +17,7 @@ function Login() {
   useEffect(() => {
     if (localStorage.getItem('chat-app-user')) {
       navigate('/');
-    }
+    } 
   }, []);
 
   const handleChange = (event) => {
@@ -62,7 +62,13 @@ function Login() {
           color: "#ffffff",  
         });
         localStorage.setItem('chat-app-user', JSON.stringify(response.data.user));
-        navigate('/chat');
+
+        if (response.data.user.isAvatarImageSet) {
+          navigate('/chat');
+        } else{
+          navigate('/setavatar');
+        }
+        
       } catch (error) {
         Swal.fire({
           title: error.response.data.message,

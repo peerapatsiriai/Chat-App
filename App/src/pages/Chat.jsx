@@ -7,7 +7,9 @@ function Chat() {
   useEffect(() => {
     if (!localStorage.getItem('chat-app-user')) {
       navigate('/login');
-    }
+    }else if (!JSON.parse(localStorage.getItem('chat-app-user')).isAvatarImageSet) {
+      navigate('/setavatar');
+  }
   }, []);
 
   return (
