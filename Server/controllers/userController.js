@@ -102,3 +102,24 @@ module.exports.setAvatar = async (req, res) => {
 
     }
 }
+
+module.exports.getAllUsers = async (req, res) => {
+ 
+    try {
+        const userId = req.params.id;
+        const userData = await User.find({ _id: { $ne: userId } }).select([
+            "email",
+            "username",
+            "avatarImage",
+            "_id",
+        ]);
+
+        return res.status(200).json(userData)
+    } catch (error) {
+        return res.status(500).json({
+            message: "Get All User Failed",
+            status: false
+        });
+
+    }
+}

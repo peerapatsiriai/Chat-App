@@ -220,6 +220,7 @@ const FormContainer = styled.div`
       transition: 0.5s ease-in-out;
       &:hover {
         background-color: #1786F9;
+        color: #ffffff;
       }
     }
     span {

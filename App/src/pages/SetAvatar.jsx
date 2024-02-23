@@ -31,6 +31,12 @@ function SetAvatar() {
     }
   };
 
+  const resetAvatars = async() => {
+    setAvatars([]);
+    setIsloading(true);
+    getAvatars();
+  };
+
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       alert('Please select an avatar');
@@ -46,7 +52,7 @@ function SetAvatar() {
           localStorage.setItem('chat-app-user', JSON.stringify(user));
           navigate('/');
         } else {
-            alert('Something went wrong');
+          alert('Something went wrong');
         }
       } catch (error) {
         console.log(error);
@@ -57,9 +63,11 @@ function SetAvatar() {
 
   useEffect(() => {
     if (!localStorage.getItem('chat-app-user')) {
-        navigate('/login');
-    } else if (JSON.parse(localStorage.getItem('chat-app-user')).isAvatarImageSet) {
-        navigate('/');
+      navigate('/login');
+    } else if (
+      JSON.parse(localStorage.getItem('chat-app-user')).isAvatarImageSet
+    ) {
+      navigate('/');
     }
     getAvatars();
   }, []);
@@ -104,7 +112,7 @@ function SetAvatar() {
               {' '}
               Set as Profile Picture
             </button>
-            <button className='reset-btn'> Reset</button>
+            <button className='reset-btn' onClick={resetAvatars}> Reset</button>
           </div>
         </Container>
       )}
@@ -149,12 +157,12 @@ const Container = styled.div`
       }
     }
     .selected {
-      border: 0.4rem solid #4e0eff;
+      border: 0.4rem solid #00fefb;
     }
   }
   .submit-btn {
-    background-color: #4e0eff;
-    color: white;
+    background-color: #00fefb;
+    color: #131324;
     padding: 1rem 2rem;
     border: none;
     font-weight: bold;
@@ -162,9 +170,10 @@ const Container = styled.div`
     border-radius: 0.4rem;
     font-size: 1rem;
     text-transform: uppercase;
+    transition: 0.5s ease-in-out;
     &:hover {
-      background-color: red;
-      transition: 0.5s ease-in-out;
+      background-color: #1786f9;
+      color: #ffffff;
     }
   }
   .btn {
@@ -175,8 +184,8 @@ const Container = styled.div`
     gap: 1rem;
   }
   .reset-btn {
-    background-color: #4e0eff;
-    color: white;
+    background-color: #00fefb;
+    color: #131324;
     padding: 1rem 2rem;
     border: none;
     font-weight: bold;
@@ -184,9 +193,10 @@ const Container = styled.div`
     border-radius: 0.4rem;
     font-size: 1rem;
     text-transform: uppercase;
+    transition: 0.5s ease-in-out;
     &:hover {
-      background-color: red;
-      transition: 0.5s ease-in-out;
+      background-color: #1786f9;
+      color: #ffffff;   
     }
   }
 `;
