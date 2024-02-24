@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Logout from './Logout';
 import Chatinput from './Chatinput';
-import Messages from './Messages';
 import Axios from 'axios';
 import { addMessageRoute, getAllMessageRoute } from '../utils/APIRoutes';
 import { v4 as uuidv4 } from "uuid";
+import Swal from 'sweetalert2';
 
 export default function Chatcontainer({ currentChat, currentUser, socket }) {
   const [messages, setMessages] = useState([]);
@@ -42,7 +42,16 @@ export default function Chatcontainer({ currentChat, currentUser, socket }) {
       setMessages(msgs);
     } catch (err) {
       console.log(err);
-      alert('Error while sending message');
+      Swal.fire({
+        title: "Error while sending message",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+        iconColor: "#4287f5",
+        background: "#131324",
+        color: "#ffffff",  
+      });
+      
     }
   };
 

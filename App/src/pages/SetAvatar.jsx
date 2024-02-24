@@ -39,7 +39,15 @@ function SetAvatar() {
 
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
-      alert('Please select an avatar');
+      Swal.fire({
+        title: "Please select an avatar",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 1500,
+        iconColor: "#4287f5",
+        background: "#131324",
+        color: "#ffffff",  
+      });
     } else {
       try {
         const user = await JSON.parse(localStorage.getItem('chat-app-user'));
@@ -52,11 +60,26 @@ function SetAvatar() {
           localStorage.setItem('chat-app-user', JSON.stringify(user));
           navigate('/');
         } else {
-          alert('Something went wrong');
+          Swal.fire({
+            title: "Can't No Fetch",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500,
+            iconColor: "#4287f5",
+            background: "#131324",
+            color: "#ffffff",  
+          });
         }
       } catch (error) {
-        console.log(error);
-        alert('Something went wrong2');
+        Swal.fire({
+          title: "Can't No Fetch",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+          iconColor: "#4287f5",
+          background: "#131324",
+          color: "#ffffff",  
+        });
       }
     }
   };
@@ -126,7 +149,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 3rem;
-  background-color: #131324;
+  //background-color: #131324;
   height: 100vh;
   width: 100vw;
 

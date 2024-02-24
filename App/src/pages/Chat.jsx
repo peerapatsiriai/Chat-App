@@ -7,6 +7,7 @@ import Contacts from '../components/Contacts';
 import Welcome from '../components/Welcome';
 import Chatcontainer from '../components/Chatcontainer';
 import { io } from 'socket.io-client';
+import Swal from 'sweetalert2';
 
 function Chat() {
   const socket = useRef();
@@ -22,7 +23,17 @@ function Chat() {
       setContacts(data.data);
       setCurrentUser(JSON.parse(localStorage.getItem('chat-app-user')));
     } catch (error) {
-      alert('Error while fetching contacts');
+      
+      Swal.fire({
+        title: "Error while fetching contacts.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+        iconColor: "#4287f5",
+        background: "#131324",
+        color: "#ffffff",  
+      });
+      
     }
   };
 
@@ -83,7 +94,7 @@ const Container = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  //background-color: #131324;
   .container {
     height: 85vh;
     width: 85vw;

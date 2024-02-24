@@ -107,12 +107,18 @@ module.exports.getAllUsers = async (req, res) => {
  
     try {
         const userId = req.params.id;
-        const userData = await User.find({ _id: { $ne: userId } }).select([
-            "email",
-            "username",
-            "avatarImage",
-            "_id",
-        ]);
+        const userData = await User.find(
+            { 
+                _id: { $ne: userId },
+                isAvatarImageSet: true
+            },
+            { 
+                email: 1,
+                username: 1,
+                avatarImage: 1,
+                _id: 1
+            }
+        );
 
         return res.status(200).json(userData)
     } catch (error) {

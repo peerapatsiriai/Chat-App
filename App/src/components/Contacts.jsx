@@ -122,8 +122,13 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: #9a86f3;
+      background-color: #00FEFB;
+      .username h3 {
+        color: #131324;
+      }
     }
+    
+    
   }
 
   .current-user {

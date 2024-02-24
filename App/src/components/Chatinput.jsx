@@ -52,9 +52,8 @@ const Container = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 5% 95%;
-  background-color: #ffffff39;
   padding: 0 2rem;
-  background-color: #080420;
+  
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
     gap: 1rem;
@@ -129,7 +128,7 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #9a86f3;
+      background-color: #00FEFB;
       border: none;
       @media screen and (min-width: 720px) and (max-width: 1080px) {
         padding: 0.3rem 1rem;
@@ -139,7 +138,7 @@ const Container = styled.div`
       }
       svg {
         font-size: 2rem;
-        color: white;
+        color: #131324;
       }
     }
   }
