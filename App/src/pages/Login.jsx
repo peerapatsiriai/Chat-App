@@ -64,7 +64,7 @@ function Login() {
         localStorage.setItem('chat-app-user', JSON.stringify(response.data.user));
 
         if (response.data.user.isAvatarImageSet) {
-          navigate('/chat');
+          navigate('/');
         } else{
           navigate('/setavatar');
         }

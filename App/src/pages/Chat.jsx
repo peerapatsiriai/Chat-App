@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { allUserRoute } from '../utils/APIRoutes';
-import  Contacts  from '../components/Contacts';
-import  Welcome  from '../components/Welcome';
+import { allUserRoute, host } from '../utils/APIRoutes';
+import Contacts from '../components/Contacts';
+import Welcome from '../components/Welcome';
+import Chatcontainer from '../components/Chatcontainer';
+import { io } from 'socket.io-client';
 
 function Chat() {
+  const socket = useRef();
   const [contacts, setContacts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentChat, setCurrentChat] = useState(undefined);
   const navigate = useNavigate();
 
@@ -18,8 +21,6 @@ function Chat() {
       const data = await axios.get(`${allUserRoute}/${user_id}`);
       setContacts(data.data);
       setCurrentUser(JSON.parse(localStorage.getItem('chat-app-user')));
-      console.log(data.data);
-      console.log(JSON.parse(localStorage.getItem('chat-app-user')));
     } catch (error) {
       alert('Error while fetching contacts');
     }
@@ -28,7 +29,13 @@ function Chat() {
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
-  
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user",currentUser._id);
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     if (!localStorage.getItem('chat-app-user')) {
@@ -40,7 +47,6 @@ function Chat() {
     } else if (
       JSON.parse(localStorage.getItem('chat-app-user')).isAvatarImageSet
     ) {
-      setCurrentUser(JSON.parse(localStorage.getItem('chat-app-user')));
       getAllUser();
     }
   }, []);
@@ -49,8 +55,20 @@ function Chat() {
     <>
       <Container>
         <div className='container'>
-          <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
-          <Welcome currentUser={currentUser}/>
+          <Contacts
+            contacts={contacts}
+            currentUser={currentUser}
+            changeChat={handleChatChange}
+          />
+          {currentChat === undefined
+            ? currentUser && <Welcome currentUser={currentUser} />
+            : currentChat && (
+                <Chatcontainer
+                  currentChat={currentChat}
+                  currentUser={currentUser}
+                  socket={socket}
+                />
+              )}
         </div>
       </Container>
     </>

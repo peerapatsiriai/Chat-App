@@ -1,8 +1,14 @@
-import React from 'react'
+import React,{ useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Robot from '../assets/robot1.gif'
 
 export default function Welcome({ currentUser }) {
+
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <Container>
         <img src={Robot} alt="Robot" />
