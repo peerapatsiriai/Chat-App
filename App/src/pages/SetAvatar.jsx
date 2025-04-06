@@ -6,9 +6,28 @@ import { setAvatarRoute } from '../utils/APIRoutes';
 import Swal from 'sweetalert2';
 import loader from '../assets/loader.gif';
 import { Buffer } from 'buffer';
+import avatar1 from '../assets/avatars/1.png';
+import avatar2 from '../assets/avatars/2.png';
+import avatar3 from '../assets/avatars/3.png';
+import avatar4 from '../assets/avatars/4.png';
+import avatar5 from '../assets/avatars/5.png';
+import avatar6 from '../assets/avatars/6.png';
+import avatar7 from '../assets/avatars/7.png';
+import avatar8 from '../assets/avatars/8.png';
 
 function SetAvatar() {
-  const api = 'https://api.multiavatar.com/45678945';
+  // merge all avatars into one array
+  const allAvatarImage = [
+    avatar1,
+    avatar2,
+    avatar3,
+    avatar4,
+    avatar5,
+    avatar6,  
+    avatar7,
+    avatar8,
+  ];
+
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsloading] = useState(true);
@@ -16,21 +35,32 @@ function SetAvatar() {
 
   const getAvatars = async () => {
     try {
-      const data = [];
-      for (let i = 0; i < 5; i++) {
-        const image = await Axios.get(
-          `${api}/${Math.round(Math.random() * 1000)}`
-        );
-        const buffer = new Buffer(image.data);
-        data.push(buffer.toString('base64'));
-      }
-      setAvatars(data);
-      setIsloading(false);
+      setTimeout(() => {
+        let availableAvatars = [...allAvatarImage];
+        const data = [];
+        
+        for (let i = 0; i < 5; i++) {
+          const randomIndex = Math.floor(Math.random() * availableAvatars.length);
+          data.push(availableAvatars[randomIndex]);
+          availableAvatars.splice(randomIndex, 1);
+        }
+        setAvatars(data);
+        setIsloading(false);
+      }, 1000);
     } catch (error) {
-      getAvatars();
+      console.error("Avatar fetch error:", error);
+      Swal.fire({
+        title: "Error fetching avatars",
+        text: "Please try again later",
+        icon: "error",
+        showConfirmButton: true,
+        iconColor: "#4287f5",
+        background: "#131324",
+        color: "#ffffff",  
+      });
+      setIsloading(false);
     }
   };
-
   const resetAvatars = async() => {
     setAvatars([]);
     setIsloading(true);
@@ -119,9 +149,9 @@ function SetAvatar() {
                     selectedAvatar === index ? 'selected' : ''
                   }`}>
                   <img
-                    src={`data:image/svg+xml;base64,${avatar}`}
+                    src={`${avatar}`}
                     alt='avatar'
-                    key={avatar}
+                    key={index}
                     onClick={() => setSelectedAvatar(index)}
                   />
                 </div>

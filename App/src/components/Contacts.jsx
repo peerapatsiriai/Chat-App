@@ -39,7 +39,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
                 >
                   <div className="avatar">
                     <img
-                      src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                      src={`${contact.avatarImage}`}
                       alt=""
                     />
                   </div>
@@ -53,7 +53,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
           <div className="current-user">
             <div className="avatar">
               <img
-                src={`data:image/svg+xml;base64,${currentAvatar}`}
+                src={`${currentAvatar}`}
                 alt="avatar"
               />
             </div>
